@@ -18,15 +18,15 @@
   },
   "homepage": "https://github.com/s3pweb/portainer-backup-restore#readme",
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.19.2",
     "bunyan": "^1.8.12",
-    "config": "^3.2.4",
-    "yargs": "^15.0.2"
+    "config": "^3.3.1",
+    "yargs": "^15.3.1"
   },
   "devDependencies": {
     "ava": "^2.4.0",
     "express": "^4.17.1",
-    "standard": "^14.3.1"
+    "standard": "^14.3.3"
   },
   "ava": {
     "files": [
