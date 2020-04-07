@@ -25,6 +25,12 @@ const argv = yargs
       alias: 'password',
       describe: 'User\'s password',
       string: true
+    },
+    'd': {
+      demand: false,
+      alias: 'disablessl',
+      describe: 'Disable TLS verification.',
+      boolean: true
     }
   })
   .implies('url', 'login')
@@ -37,31 +43,37 @@ const argv = yargs
   .locale('en')
   .argv
 
-async function main () {
+async function main() {
   log.debug('Starting app')
+
+  // Disable the TLS verification.
+  if (argv['disablessl']) {
+    process.env['NODE_TLS_REJECT_UNAUTHORIZED'] = '0';
+  }
 
   // Log in and get JWT token from portainer
   let jwt = await stacks.login(argv.url, argv.login, argv.password)
-
-  if (argv._[0] === 'backup') {
-    // Get all stacks from portainer and save them to a json file
-    await stacks.backupStacks(jwt, argv.url)
-  } else if (argv._[0] === 'update') {
-    // Read the backup file then update all the stacks
-    await stacks.updateStacks(jwt, argv.url)
-  } else if (argv._[0] === 'create') {
-    // Read the backup file then re-create all the stacks
-    await stacks.removeAndCreateStacks(jwt, argv.url)
-  } else {
-    log.warn(`Unknown command`)
+  
+  switch (argv._[0]) {
+    case 'backup':
+      // Get all stacks from portainer and save them to a json file
+      await stacks.backupStacks(jwt, argv.url); break;
+    case 'update':
+      // Read the backup file then update all the stacks
+      await stacks.updateStacks(jwt, argv.url); break;
+    case 'create':
+      // Read the backup file then re-create all the stacks
+      await stacks.removeAndCreateStacks(jwt, argv.url); break;
+    default:
+      log.warn(`Unknown command`); break;
   }
 }
 
 main()
   .catch((err) => {
     if (err.response && err.response.data) {
-      log.error({err: err}, `Http error: ${err.response.data.err}`)
+      log.error({ err: err }, `Http error: ${err.response.data.err}`)
     } else {
-      log.error({err: err}, `Application error.`)
+      log.error({ err: err }, `Application error.`)
     }
   })
