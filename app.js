@@ -58,12 +58,6 @@ async function main() {
     case 'backup':
       // Get all stacks from portainer and save them to a json file
       await stacks.backupStacks(jwt, argv.url); break;
-    case 'update':
-      // Read the backup file then update all the stacks
-      await stacks.updateStacks(jwt, argv.url); break;
-    case 'create':
-      // Read the backup file then re-create all the stacks
-      await stacks.removeAndCreateStacks(jwt, argv.url); break;
     default:
       log.warn(`Unknown command`); break;
   }
