@@ -1,6 +1,7 @@
 const yargs = require('yargs');
 
 const log = require('./lib/logger/logger')('Main');
+const portainer = require('./lib/portainer/portainer.utils');
 const stacks = require('./lib/stacks/stacks.utils');
 
 const { argv } = yargs
@@ -51,7 +52,7 @@ async function main() {
   }
 
   // Log in and get JWT token from portainer
-  const jwt = await stacks.login(argv.url, argv.login, argv.password);
+  const jwt = await portainer.login(argv.url, argv.login, argv.password);
 
   switch (argv._[0]) {
     case 'backup':
