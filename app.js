@@ -2,12 +2,12 @@ const yargs = require('yargs');
 
 const log = require('./lib/logger/logger')('Main');
 const portainer = require('./lib/portainer/portainer.utils');
-const stacks = require('./lib/stacks/stacks.utils');
+const stacks = require('./lib/objects/stacks.utils');
+const hubs = require('./lib/objects/dockerhub.utils');
+const endpoints = require('./lib/objects/endpoints');
 
 const { argv } = yargs
   .command('backup', 'Back up stacks from portainer')
-  .command('update', 'Update the backed up  stacks')
-  .command('create', 'Remove then create the backed up stacks')
   .options({
     u: {
       demand: false,
@@ -57,7 +57,10 @@ async function main() {
   switch (argv._[0]) {
     case 'backup':
       // Get all stacks from portainer and save them to a json file
-      await stacks.backupStacks(jwt, argv.url); break;
+      await stacks.backup(jwt, argv.url);
+      await hubs.backup(jwt, argv.url);
+      await endpoints.backup(jwt, argv.url);
+      break;
     default:
       log.warn('Unknown command'); break;
   }

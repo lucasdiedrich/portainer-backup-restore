@@ -4,7 +4,7 @@ import { before, after } from './utils';
 const config = require('config');
 
 const portainer = require('../lib/portainer/portainer.utils');
-const stacks = require('../lib/stacks/stacks.utils');
+const stacks = require('../lib/objects/stacks.utils');
 const bf = require('../lib/fs/backupFiles.utils');
 
 const filename = config.backupFile;
