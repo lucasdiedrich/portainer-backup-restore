@@ -6,5 +6,5 @@
     "password": ""
   },
   "consoleLogLevel": "trace",
-  "backupFile": "stacks-backup.json"
+  "backupFolder": "./backup"
 }

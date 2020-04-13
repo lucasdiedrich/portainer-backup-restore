@@ -9,6 +9,12 @@ const PO = require('./lib/objects');
 const { argv } = yargs
   .command('backup', 'Back up stacks from portainer')
   .options({
+    f: {
+      demand: false,
+      alias: 'configfile',
+      describe: 'Config File with all variables.',
+      string: true,
+    },
     u: {
       demand: false,
       alias: 'url',
@@ -32,6 +38,13 @@ const { argv } = yargs
       alias: 'disablessl',
       describe: 'Disable TLS verification.',
       boolean: true,
+    },
+    b: {
+      demand: false,
+      alias: 'backupFolder',
+      describe: 'Backup folder.',
+      string: true,
+      default: './backup'
     },
   })
   .implies('url', 'login')

@@ -64,3 +64,4 @@ typings/
 
 # Ignore backup files.
 *-backup.json
+backup/*
