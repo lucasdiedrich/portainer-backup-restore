@@ -2,9 +2,9 @@ const yargs = require('yargs');
 
 const log = require('./lib/logger/logger')('Main');
 const portainer = require('./lib/portainer/portainer.utils');
-const stacks = require('./lib/objects/stacks.utils');
-const hubs = require('./lib/objects/dockerhub.utils');
-const endpoints = require('./lib/objects/endpoints');
+
+// PortainerObjects
+const PO = require('./lib/objects');
 
 const { argv } = yargs
   .command('backup', 'Back up stacks from portainer')
@@ -57,9 +57,21 @@ async function main() {
   switch (argv._[0]) {
     case 'backup':
       // Get all stacks from portainer and save them to a json file
-      await stacks.backup(jwt, argv.url);
-      await hubs.backup(jwt, argv.url);
-      await endpoints.backup(jwt, argv.url);
+      await PO.Stacks.backup(jwt, argv.url);
+      await PO.Dockerhub.backup(jwt, argv.url);
+      await PO.Endpoint.backup(jwt, argv.url);
+      await PO.EndpointGroup.backup(jwt, argv.url);
+      await PO.Extensions.backup(jwt, argv.url);
+      await PO.Registry.backup(jwt, argv.url);
+      await PO.Roles.backup(jwt, argv.url);
+      await PO.Settings.backup(jwt, argv.url);
+      await PO.SettingsPublic.backup(jwt, argv.url);
+      await PO.Status.backup(jwt, argv.url);
+      await PO.Tags.backup(jwt, argv.url);
+      await PO.TeamMemberships.backup(jwt, argv.url);
+      await PO.Teams.backup(jwt, argv.url);
+      await PO.Templates.backup(jwt, argv.url);
+      await PO.Users.backup(jwt, argv.url);
       break;
     default:
       log.warn('Unknown command'); break;
