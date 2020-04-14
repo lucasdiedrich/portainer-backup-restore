@@ -5,6 +5,7 @@ const portainer = require('./lib/portainer/portainer.utils');
 
 // PortainerObjects
 const PO = require('./lib/objects');
+const FsUtils = require('./lib/fs/backupFiles.utils');
 
 const { argv } = yargs
   .command('backup', 'Back up stacks from portainer')
@@ -69,7 +70,6 @@ async function main() {
 
   switch (argv._[0]) {
     case 'backup':
-      // Get all stacks from portainer and save them to a json file
       await PO.Stacks.backup(jwt, argv.url);
       await PO.Dockerhub.backup(jwt, argv.url);
       await PO.Endpoint.backup(jwt, argv.url);
@@ -85,6 +85,8 @@ async function main() {
       await PO.Teams.backup(jwt, argv.url);
       await PO.Templates.backup(jwt, argv.url);
       await PO.Users.backup(jwt, argv.url);
+
+      await FsUtils.tarBackup();
       break;
     default:
       log.warn('Unknown command'); break;

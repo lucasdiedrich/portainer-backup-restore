@@ -6,5 +6,6 @@
     "password": ""
   },
   "consoleLogLevel": "trace",
-  "backupFolder": "./backup"
+  "backupFolder": "./backup",
+  "tmpFolder": "./tmp"
 }
