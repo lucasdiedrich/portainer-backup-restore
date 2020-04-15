@@ -1,37 +1,32 @@
-# Portainer backup and restore utility
+# Portainer backup utility
 
 ## Introduction
 
-This node app backup and restore your Portainer stacks.
+This node app backup your Portainer objects and Docker services.
 
-Current portainer API supported is 1.19.1
-
-## Installation
-
-    $ npm install
+Current portainer API supported is 1.23.2
 
 ## Usage
 
+docker run --name pbk \
+           -v /etc/localtime:/etc/localtime \
+           -v /volumes/data/config.json:/data/default.json \
+           -v /volumes/data/backup/:/data/backup/ \
+           -v /var/run/docker.sock:/var/run/docker.sock \
+           -d lucasdiedrich/portainer-backup-restore
+
 ### Backup
 
-This command will create (or replace) a file named `stacks-backup.json` where all stacks with `Total` control from portainer will be saved.
-A backup file is mandatory to restore stacks, but it can be created by hand if you follow the backup format.
+This command will create (or replace) a file named `<objects>.json` where all objects with `Total` control from portainer will be saved.
+A backup file is mandatory to restore objects, but it can be created by hand if you follow the backup format.
 
+    $ node . backup
 
-    $ node . backup --url <URL> --login <LOGIN> --password <PWD>
+The backup file are tar gzipped inside another <date-isostring>.tgz.
 
-### Restore
+## Backup files format
 
-This command will UPDATE the stacks on portainer.
-
-    $ node . update --url <URL> --login <LOGIN> --password <PWD>
-
-This command will REMOVE then CREATE the stacks on portainer.
-
-    $ node . create --url <URL> --login <LOGIN> --password <PWD>
-
-## Backup format
-
+The will one file for each portainer object available and onde aditional file for Docker services model.
     [
       {
         "Name": "nginx",
@@ -45,3 +40,25 @@ This command will REMOVE then CREATE the stacks on portainer.
 
       }
     ]
+
+### Config file example
+
+`
+{
+  "name": "pbk-backup",
+  "portainer": {
+    "url": "https://exampleurl.com",
+    "login": "blablabla",
+    "password": "*******"
+  },
+  "consoleLogLevel": "trace",
+  "backupFolder": "/data/backup",
+  "disablessl": true, 
+  "tmpFolder": "./tmp",
+  "socketPath": "/var/run/docker.sock"
+}
+`
+
+## Initial Project
+
+This project was built on top of [portainer-backup-restore](https://github.com/s3pweb/portainer-backup-restore)
