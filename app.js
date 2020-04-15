@@ -2,6 +2,8 @@ const yargs = require('yargs');
 
 const log = require('./lib/logger/logger')('Main');
 const portainer = require('./lib/utils/portainer');
+const Docker = require('./lib/utils/docker');
+const config = require('config');
 
 // PortainerObjects
 const PO = require('./lib/objects');
@@ -61,12 +63,14 @@ async function main() {
   log.debug('Starting app');
 
   // Disable the TLS verification.
-  if (argv.disablessl) {
+  if (argv.disablessl || config.disablessl) {
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
   }
 
   // Log in and get JWT token from portainer
   const jwt = await portainer.login(argv.url, argv.login, argv.password);
+  // Log in docker socket
+  const dockerAuth = await Docker.login();
 
   switch (argv._[0]) {
     case 'backup':
@@ -86,6 +90,11 @@ async function main() {
       await PO.Templates.backup(jwt, argv.url);
       await PO.Users.backup(jwt, argv.url);
 
+      // Exec docker services backup
+      if(dockerAuth) {
+        await PO.Services.backup(dockerAuth);
+      }
+      // Tar -zcvf everything
       await FsUtils.tarBackup();
       break;
     default:

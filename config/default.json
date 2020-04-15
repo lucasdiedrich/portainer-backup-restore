@@ -7,5 +7,6 @@
   },
   "consoleLogLevel": "trace",
   "backupFolder": "./backup",
-  "tmpFolder": "./tmp"
+  "tmpFolder": "./tmp",
+  "socketPath": "/var/run/docker.sock"
 }
