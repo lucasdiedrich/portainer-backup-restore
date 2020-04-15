@@ -3,7 +3,7 @@ import { before, after } from './utils';
 
 const config = require('config');
 
-const portainer = require('../lib/portainer/portainer.utils');
+const portainer = require('../lib/utils/portainer');
 
 test.before(before);
 

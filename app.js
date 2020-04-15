@@ -1,11 +1,11 @@
 const yargs = require('yargs');
 
 const log = require('./lib/logger/logger')('Main');
-const portainer = require('./lib/portainer/portainer.utils');
+const portainer = require('./lib/utils/portainer');
 
 // PortainerObjects
 const PO = require('./lib/objects');
-const FsUtils = require('./lib/fs/backupFiles.utils');
+const FsUtils = require('./lib/utils/file');
 
 const { argv } = yargs
   .command('backup', 'Back up stacks from portainer')
