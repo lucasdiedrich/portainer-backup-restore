@@ -8,12 +8,14 @@ Current portainer API supported is 1.23.2
 
 ## Usage
 
+``` 
 docker run --name pbk \
            -v /etc/localtime:/etc/localtime \
            -v /volumes/data/config.json:/data/default.json \
            -v /volumes/data/backup/:/data/backup/ \
            -v /var/run/docker.sock:/var/run/docker.sock \
            -d lucasdiedrich/portainer-backup-restore
+``` 
 
 ### Backup
 
@@ -26,24 +28,27 @@ The backup file are tar gzipped inside another <date-isostring>.tgz.
 
 ## Backup files format
 
-The will one file for each portainer object available and onde aditional file for Docker services model.
-    [
-      {
-        "Name": "nginx",
-        "SwarmID": "jpofkc0i9uo9wtx1zesuk649w",
-        "StackFileContent": "version: 3\n services:\n web:\n image:nginx"
-      },
-      {
-        "Name": "HelloWorld",
-        "SwarmID": "jpofkc0i9uo9wtx1zesuk649w",
-        "StackFileContent": "version: 3\n services:\n hello-world:\n image:hello-world"
+The will one file for each portainer object available and onde aditional file for Docker services model. 
 
-      }
-    ]
+Stack example file:
+``` 
+[
+  {
+    "Name": "nginx",
+    "SwarmID": "jpofkc0i9uo9wtx1zesuk649w",
+    "StackFileContent": "version: 3\n services:\n web:\n image:nginx"
+  },
+  {
+    "Name": "HelloWorld",
+    "SwarmID": "jpofkc0i9uo9wtx1zesuk649w",
+    "StackFileContent": "version: 3\n services:\n hello-world:\n image:hello-world"
 
-### Config file example
+  }
+]
+```
+### Config file
 
-`
+```
 {
   "name": "pbk-backup",
   "portainer": {
@@ -57,7 +62,7 @@ The will one file for each portainer object available and onde aditional file fo
   "tmpFolder": "./tmp",
   "socketPath": "/var/run/docker.sock"
 }
-`
+```
 
 ## Initial Project
 
