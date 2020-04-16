@@ -62,33 +62,37 @@ const { argv } = yargs
 async function main() {
   log.debug('Starting app');
 
+  const url = argv.url || config.portainer.url;
+  const login = argv.login || config.portainer.login;
+  const password = argv.password || config.portainer.password;
+
   // Disable the TLS verification.
   if (argv.disablessl || config.disablessl) {
     process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
   }
 
   // Log in and get JWT token from portainer
-  const jwt = await portainer.login(argv.url, argv.login, argv.password);
+  const jwt = await portainer.login(url, login, password);
   // Log in docker socket
   const dockerAuth = await Docker.login();
 
   switch (argv._[0]) {
     case 'backup':
-      await PO.Stacks.backup(jwt, argv.url);
-      await PO.Dockerhub.backup(jwt, argv.url);
-      await PO.Endpoint.backup(jwt, argv.url);
-      await PO.EndpointGroup.backup(jwt, argv.url);
-      await PO.Extensions.backup(jwt, argv.url);
-      await PO.Registry.backup(jwt, argv.url);
-      await PO.Roles.backup(jwt, argv.url);
-      await PO.Settings.backup(jwt, argv.url);
-      await PO.SettingsPublic.backup(jwt, argv.url);
-      await PO.Status.backup(jwt, argv.url);
-      await PO.Tags.backup(jwt, argv.url);
-      await PO.TeamMemberships.backup(jwt, argv.url);
-      await PO.Teams.backup(jwt, argv.url);
-      await PO.Templates.backup(jwt, argv.url);
-      await PO.Users.backup(jwt, argv.url);
+      await PO.Stacks.backup(jwt, url);
+      await PO.Dockerhub.backup(jwt, url);
+      await PO.Endpoint.backup(jwt, url);
+      await PO.EndpointGroup.backup(jwt, url);
+      await PO.Extensions.backup(jwt, url);
+      await PO.Registry.backup(jwt, url);
+      await PO.Roles.backup(jwt, url);
+      await PO.Settings.backup(jwt, url);
+      await PO.SettingsPublic.backup(jwt, url);
+      await PO.Status.backup(jwt, url);
+      await PO.Tags.backup(jwt, url);
+      await PO.TeamMemberships.backup(jwt, url);
+      await PO.Teams.backup(jwt, url);
+      await PO.Templates.backup(jwt, url);
+      await PO.Users.backup(jwt, url);
 
       // Exec docker services backup
       if(dockerAuth) {

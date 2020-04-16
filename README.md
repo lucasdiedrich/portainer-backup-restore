@@ -14,7 +14,7 @@ docker run --name pbk \
            -v /volumes/data/config.json:/data/default.json \
            -v /volumes/data/backup/:/data/backup/ \
            -v /var/run/docker.sock:/var/run/docker.sock \
-           -d lucasdiedrich/portainer-backup-restore
+           -d lucasdiedrich/portainer-backup
 ``` 
 
 ### Backup
