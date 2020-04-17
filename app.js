@@ -95,9 +95,10 @@ async function main() {
       await PO.Users.backup(jwt, url);
 
       // Exec docker services backup
-      // if(dockerAuth) {
-      //   await PO.Services.backup(dockerAuth);
-      // }
+      if(dockerAuth) {
+        await PO.Services.backup(dockerAuth);
+      }
+      
       // Tar -zcvf everything
       await FsUtils.tarBackup();
       break;
