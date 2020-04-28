@@ -19,6 +19,6 @@ RUN apk update && apk add --no-cache make gcc g++ python dcron git bash bash-doc
 	git clone https://github.com/lucasdiedrich/portainer-backup-restore . && \
 	npm install --silent && \
 	rm -rf backup/ config/*; ln -s /data/backup $(pwd)/backup; ln -s /data/config.json $(pwd)/config/default.json && \
-	apk del make gcc g++ python && rm -rf /var/cache/apk/*
+	apk del make gcc g++ python && rm -rf /var/cache/apk/* && mkdir tmp
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]
