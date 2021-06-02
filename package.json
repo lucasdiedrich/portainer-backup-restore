@@ -1,6 +1,6 @@
 {
   "name": "@s3pweb/portainer-backup-restore",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Backup and restore your stacks from portainer.",
   "main": "app.js",
   "scripts": {
