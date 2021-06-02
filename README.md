@@ -4,7 +4,7 @@
 
 This node app backup your Portainer objects and Docker services.
 
-Current portainer API supported is 1.23.2
+Current portainer API supported is 1.24.2
 
 ## Usage
 
@@ -57,9 +57,9 @@ Stack example file:
     "password": "*******"
   },
   "consoleLogLevel": "trace",
-  "backupFolder": "/data/backup",
+  "backupFolder": "/backup",
   "disablessl": true, 
-  "tmpFolder": "./tmp",
+  "tmpFolder": "/tmp",
   "socketPath": "/var/run/docker.sock"
 }
 ```
