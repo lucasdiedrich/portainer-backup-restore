@@ -1,4 +1,4 @@
-FROM node:10-alpine
+FROM node:14-alpine
 
 RUN mkdir -p /var/portainer-backup && \
 	mkdir -m 0644 -p /var/log/cron && \
@@ -15,10 +15,10 @@ VOLUME "/data"
 ENV GIT_SSL_NO_VERIFY=true
 
 RUN apk update && apk add --no-cache make gcc g++ python dcron git bash bash-doc bash-completion supervisor vim && \
-	mkdir -p /run/supervisord/ && \
+	mkdir -p /run/supervisord/ /backup && \
 	git clone https://github.com/lucasdiedrich/portainer-backup-restore . && \
 	npm install --silent && \
 	rm -rf backup/ config/*; ln -s /data/backup $(pwd)/backup; ln -s /data/config.json $(pwd)/config/default.json && \
-	apk del make gcc g++ python && rm -rf /var/cache/apk/* && mkdir tmp
+	apk del make gcc g++ python && rm -rf /var/cache/apk/* 
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisord.conf"]

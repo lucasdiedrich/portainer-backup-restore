@@ -1,12 +1,13 @@
 {
   "name": "portainer-backup-restore",
   "portainer": {
-    "url": "",
-    "login": "",
-    "password": ""
+    "url": "https://portainer.docker.unila",
+    "login": "admin",
+    "password": "S3nh@l*c@."
   },
   "consoleLogLevel": "trace",
-  "backupFolder": "./backup",
-  "tmpFolder": "./tmp",
+  "disablessl": true, 
+  "backupFolder": "/backup",
+  "tmpFolder": "/tmp",
   "socketPath": "/var/run/docker.sock"
 }
